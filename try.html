@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个性化旅游系统</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #4CAF50;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-box button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .map {
+            width: 100%;
+            height: 400px;
+            background-color: #e0e0e0;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .results {
+            margin-top: 20px;
+        }
+
+        .results ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .results li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .results li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>个性化旅游系统</h1>
+    </header>
+    <div class="container">
+        <!-- 旅游推荐 -->
+        <section>
+            <h2>旅游推荐</h2>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="输入景点或学校名称">
+                <button onclick="search()">搜索</button>
+            </div>
+            <div class="results">
+                <ul id="search-results">
+                    <!-- 搜索结果将动态显示在这里 -->
+                </ul>
+            </div>
+        </section>
+
+        <!-- 旅游路线规划 -->
+        <section>
+            <h2>旅游路线规划</h2>
+            <div class="map" id="map">
+                <!-- 地图展示区域 -->
+            </div>
+            <div class="search-box">
+                <input type="text" id="route-input" placeholder="输入目标景点或场所">
+                <button onclick="planRoute()">规划路线</button>
+            </div>
+            <div class="results">
+                <ul id="route-results">
+                    <!-- 路线规划结果将动态显示在这里 -->
+                </ul>
+            </div>
+        </section>
+
+        <!-- 场所查询 -->
+        <section>
+            <h2>场所查询</h2>
+            <div class="search-box">
+                <input type="text" id="facility-input" placeholder="输入设施类别（如超市、卫生间）">
+                <button onclick="findFacilities()">查询</button>
+            </div>
+            <div class="results">
+                <ul id="facility-results">
+                    <!-- 设施查询结果将动态显示在这里 -->
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 模拟数据
+        const places = [
+            { name: "故宫", type: "景点", rating: 4.8, popularity: 1000 },
+            { name: "北京大学", type: "学校", rating: 4.7, popularity: 900 },
+            { name: "长城", type: "景点", rating: 4.9, popularity: 1200 },
+            { name: "清华大学", type: "学校", rating: 4.6, popularity: 850 },
+            { name: "西湖", type: "景点", rating: 4.5, popularity: 800 },
+        ];
+
+        const facilities = [
+            { name: "超市", distance: 200 },
+            { name: "卫生间", distance: 100 },
+            { name: "咖啡馆", distance: 300 },
+            { name: "食堂", distance: 150 },
+        ];
+
+        // 搜索功能
+        function search() {
+            const input = document.getElementById("search-input").value.toLowerCase();
+            const results = places.filter(place => place.name.toLowerCase().includes(input));
+            displayResults(results, "search-results");
+        }
+
+        // 规划路线功能
+        function planRoute() {
+            const input = document.getElementById("route-input").value.toLowerCase();
+            const results = places.filter(place => place.name.toLowerCase().includes(input));
+            displayResults(results, "route-results");
+        }
+
+        // 查询设施功能
+        function findFacilities() {
+            const input = document.getElementById("facility-input").value.toLowerCase();
+            const results = facilities.filter(facility => facility.name.toLowerCase().includes(input));
+            displayResults(results, "facility-results");
+        }
+
+        // 显示结果
+        function displayResults(data, elementId) {
+            const ul = document.getElementById(elementId);
+            ul.innerHTML = "";
+            data.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = `${item.name} - ${item.type || ""} ${item.rating ? `评分: ${item.rating}` : ""} ${item.distance ? `距离: ${item.distance}米` : ""}`;
+                ul.appendChild(li);
+            });
+        }
+    </script>
+</body>
+
+</html>
